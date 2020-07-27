@@ -8,8 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatInputModule} from '@angular/material/input';
+import {MatCardModule} from '@angular/material/card';
 
-import { NgxFileDropModule } from 'ngx-file-drop';
 import { QueueComponent } from './queue/queue.component';
 
 
@@ -26,7 +26,7 @@ import { QueueComponent } from './queue/queue.component';
     MatIconModule,
     MatToolbarModule,
     MatInputModule,
-    NgxFileDropModule
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

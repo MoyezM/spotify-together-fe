@@ -125,7 +125,7 @@ export class SpotifyService {
 
   playTrack(uri) {
     this.spotifyApi.play({
-      uris: [uri]
+      uris: ['spotify:track:' + uri]
     });
   }
 }

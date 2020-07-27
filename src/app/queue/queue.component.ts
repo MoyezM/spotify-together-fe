@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import { WebSocketService } from '../web-socket.service';
+import { SpotifyService } from '../spotify.service';
 
 @Component({
   selector: 'app-queue',
@@ -8,7 +9,8 @@ import { WebSocketService } from '../web-socket.service';
   styleUrls: ['./queue.component.scss']
 })
 export class QueueComponent implements OnInit {
-  public files: NgxFileDropEntry[] = [];
+  @Input() songs: Array<any>;
+
 
   constructor(private socket: WebSocketService) { }
 
@@ -16,7 +18,7 @@ export class QueueComponent implements OnInit {
   }
 
   addNext(uri) {
-
+    this.socket.onAddNext(uri);
   }
 
   onDrop(event: any) {
@@ -25,7 +27,15 @@ export class QueueComponent implements OnInit {
 
     const data = event.dataTransfer.getData("text");
 
-    console.log(data)
+    let uris = data.split("https://open.spotify.com/track/")
+    uris = uris.slice(1);
+
+    for (let uri of uris) {
+      uri = uri.substring(0, 22);
+      console.log(uri);
+      this.addNext(uri);
+
+    }
   }
 
   onDragOver(evt) {

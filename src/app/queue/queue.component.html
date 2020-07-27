@@ -2,4 +2,12 @@
 <div class="drop" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
   <a>Spotify Link Here</a>
 </div>
-
+<div class="songs">
+  <div *ngFor="let song of this.songs">
+    <div>
+      <mat-card class="song">
+        {{song.name}}
+      </mat-card>
+    </div>
+  </div>
+</div>

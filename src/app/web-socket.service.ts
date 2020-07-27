@@ -66,14 +66,14 @@ export class WebSocketService {
 
   onNext$() {
     const observable = new Observable(observer => {
-      this.socket.on('next', () => {
-        observer.next();
+      this.socket.on('next', (data) => {
+        observer.next(data);
       });
     });
 
     let observer =  {
-      next: () => {
-        return;
+      next: (data) => {
+        return data;
       }
     };
     return Rx.Subject.create(observer, observable);
@@ -81,14 +81,14 @@ export class WebSocketService {
 
   onPrevious$() {
     const observable = new Observable(observer => {
-      this.socket.on('previous', () => {
-        observer.next();
+      this.socket.on('previous', (data) => {
+        observer.next(data);
       });
     });
 
     let observer =  {
-      next: () => {
-        return ;
+      next: (data) => {
+        return data;
       }
     };
     return Rx.Subject.create(observer, observable);
@@ -96,6 +96,27 @@ export class WebSocketService {
 
   onPrevious() {
     this.socket.emit('previous');
+  }
+
+  onAddNext(uri) {
+    this.socket.emit('addNext', uri);
+  }
+
+
+  onAddNext$() {
+    const observable = new Observable(observer => {
+      this.socket.on('addNext', (data) => {
+        observer.next(data);
+      });
+    });
+
+    const observer =  {
+      next: (data) => {
+        return data;
+      }
+    };
+
+    return Rx.Subject.create(observer, observable);
   }
 
 }

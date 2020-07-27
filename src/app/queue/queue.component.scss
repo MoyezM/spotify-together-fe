@@ -1,5 +1,5 @@
 .drop {
-  height: 20%;
+  height: 3em;
   width: 80%;
   background-color: rgb(65, 65, 65);
   border-radius: 25px;
@@ -7,9 +7,22 @@
   justify-content: center;
   align-items: center;
 
-  font-size: 4em;
+  font-size: 3em;
 
   a:hover {
     color: pink;
   }
+}
+
+.songs {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  max-height: 30em;
+  overflow-y: scroll;
+
+  .song {
+    margin: 5px;
+  }
+
 }

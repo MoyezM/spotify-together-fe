@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
   playBackPercent: number;
   room = this.socket.get_room();
   loaded = false;
+  songs = [];
 
   currentSong = {
     song: '',
@@ -49,16 +50,28 @@ export class HomeComponent implements OnInit {
       this.spotifyService.togglePlayback(data);
     });
 
-    this.socket.onPrevious$().subscribe(() => {
-      this.spotifyService.skipPrevious();
+    this.socket.onPrevious$().subscribe((data) => {
+      this.spotifyService.playTrack(data);
     });
 
-    this.socket.onNext$().subscribe(() => {
-      this.spotifyService.skipNext();
+    this.socket.onNext$().subscribe((data) => {
+      this.spotifyService.playTrack(data);
+    });
+
+    this.socket.onAddNext$().subscribe((data) => {
+      this.songs = data;
+      this.getSongInfo(this.songs);
     });
   }
   ngOnInit(): void {
     this.spotifyService.init();
+  }
+
+  getSongInfo(songs) {
+    this.spotifyService.spotifyApi.getTracks(songs).then(data => {
+      this.songs = data.tracks;
+      this.ref.detectChanges();
+    });
   }
 
   updateData(data: any) {
@@ -96,8 +109,8 @@ export class HomeComponent implements OnInit {
     }
 
     if (!this.loaded) {
-      this.loaded = true;
       setTimeout(() => {
+        this.loaded = true;
         this.socket.connect();
         this.socket_subscriptions();
         this.room = this.socket.get_room();
