@@ -21,10 +21,21 @@
 
 
 
-<div class="box">
+<div *ngIf='this.loaded' class="box">
   <div class="player">
     <div class="album">
       <img src={{imageURL}}>
+    </div>
+    <div class="progress">
+      <mat-progress-bar color="accent" mode="determinate" [value]="this.playBackPercent"></mat-progress-bar>
+    </div>
+    <div class="names">
+      <h1>
+        {{song}}
+      </h1>
+      <h3>
+        {{artistCombined}}
+      </h3>
     </div>
     <div *ngIf="this.loaded" class="buttons">
       <button mat-raised-button color="accent" (click)="onPrevious()">

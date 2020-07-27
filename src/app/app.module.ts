@@ -9,6 +9,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatInputModule} from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 import { QueueComponent } from './queue/queue.component';
 
@@ -26,7 +27,8 @@ import { QueueComponent } from './queue/queue.component';
     MatIconModule,
     MatToolbarModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
   room = this.socket.get_room();
   loaded = false;
   songs = [];
+  endtime: number;
 
   currentSong = {
     song: '',
@@ -65,6 +66,23 @@ export class HomeComponent implements OnInit {
   }
   ngOnInit(): void {
     this.spotifyService.init();
+    this.getPlaybackTime();
+  }
+
+  getPlaybackTime() {
+    setInterval(() => {
+      if (!this.paused) {
+        this.spotifyService.spotifyApi.getMyCurrentPlaybackState().then((data) => {
+          this.playBackTime = data.progress_ms;
+          this.playBackPercent = 100 * this.playBackTime / this.playBackDuration;
+          this.ref.detectChanges();
+          if (this.playBackPercent >= 98) {
+            // this.spotifyService.pausePlayback();
+            this.socket.onNext();
+          }
+        });
+      }
+    }, 1000);
   }
 
   getSongInfo(songs) {
@@ -75,6 +93,7 @@ export class HomeComponent implements OnInit {
   }
 
   updateData(data: any) {
+    console.log(data);
     if (this.imageURL !== data.track_window.current_track.album.images[2].url) {
       this.imageURL = data.track_window.current_track.album.images[2].url;
       this.ref.detectChanges();
@@ -88,7 +107,8 @@ export class HomeComponent implements OnInit {
       this.album = data.track_window.current_track.album.name;
       this.ref.detectChanges();
     }
-    if (this.song !== data.track_window.current_track.name) {
+    if (this.playBackDuration !== data.duration) {
+      console.log('duration changed')
       this.playBackDuration = data.duration;
       this.song = data.track_window.current_track.name;
       this.ref.detectChanges();
@@ -109,9 +129,9 @@ export class HomeComponent implements OnInit {
     }
 
     if (!this.loaded) {
+      this.loaded = true;
+      this.socket.connect();
       setTimeout(() => {
-        this.loaded = true;
-        this.socket.connect();
         this.socket_subscriptions();
         this.room = this.socket.get_room();
       }, 1000);

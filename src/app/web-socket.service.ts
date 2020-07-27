@@ -61,6 +61,7 @@ export class WebSocketService {
   }
 
   onNext() {
+    console.log("go to next")
     this.socket.emit('next');
   }
 

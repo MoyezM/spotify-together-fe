@@ -13,6 +13,18 @@
   margin-top: 25px;
   display: flex;
 
+  .names {
+    margin-top: 10px;
+    text-align: center;
+    color: white;
+  }
+
+  .progress {
+    margin-left : 50px;
+    margin-right : 50px;
+    margin-top: 10px;
+  }
+
   .player {
     width: 50%;
     .album {
@@ -20,7 +32,7 @@
       justify-content: center;
 
       img {
-        width: 80%;
+        width: 30%;
       }
     }
   }
