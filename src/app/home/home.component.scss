@@ -1,0 +1,44 @@
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+
+  a {
+    color: black;
+    text-decoration: none;
+  }
+}
+
+.box {
+  margin-top: 25px;
+  display: flex;
+
+  .player {
+    width: 50%;
+    .album {
+      display: flex;
+      justify-content: center;
+
+      img {
+        width: 80%;
+      }
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    button {
+      margin: 10px;
+    }
+  }
+
+  .queue {
+    width: 50%;
+
+    img {
+      width: 80%;
+    }
+  }
+
+}

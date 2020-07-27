@@ -1,0 +1,47 @@
+<mat-toolbar class="toolbar" color="accent">
+  <span>
+    Room :
+    <mat-form-field>
+      <input matInput #box (keyup.enter)="set_room(box.value)">
+    </mat-form-field>
+  </span>
+
+  <span>
+    Current Room : {{this.room}}
+  </span>
+
+
+  <span>
+    <button mat-raised-button>
+      <a [href]="LOGIN_URL">Login</a>
+    </button>
+  </span>
+</mat-toolbar>
+
+
+
+
+<div class="box">
+  <div class="player">
+    <div class="album">
+      <img src={{imageURL}}>
+    </div>
+    <div *ngIf="this.loaded" class="buttons">
+      <button mat-raised-button color="accent" (click)="onPrevious()">
+        <mat-icon aria-hidden="false" aria-label="Example home icon">skip_previous</mat-icon>
+      </button>
+      <button mat-raised-button color="accent" (click)="togglePlayback()">
+        <mat-icon *ngIf="this.paused" aria-hidden="false" aria-label="Example home icon">play_arrow</mat-icon>
+        <mat-icon *ngIf="!this.paused" aria-hidden="false" aria-label="Example home icon">pause_circle_outline</mat-icon>
+      </button>
+      <button mat-raised-button color="accent" (click)="onNext()">
+        <mat-icon aria-hidden="false" aria-label="Example home icon">skip_next</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="this.loaded" class="queue">
+    <app-queue></app-queue>
+  </div>
+</div>
+
