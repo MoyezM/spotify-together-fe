@@ -99,8 +99,8 @@ export class WebSocketService {
     this.socket.emit('previous');
   }
 
-  onAddNext(uri) {
-    this.socket.emit('addNext', uri);
+  onAddNext(uris : Array<string>) {
+    this.socket.emit('addNext', uris);
   }
 
 

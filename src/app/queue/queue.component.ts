@@ -29,13 +29,15 @@ export class QueueComponent implements OnInit {
 
     let uris = data.split("https://open.spotify.com/track/")
     uris = uris.slice(1);
+    const goodURIS = [];
 
     for (let uri of uris) {
       uri = uri.substring(0, 22);
-      console.log(uri);
-      this.addNext(uri);
-
+      goodURIS.push(uri);
     }
+
+    this.socket.onAddNext(goodURIS);
+
   }
 
   onDragOver(evt) {

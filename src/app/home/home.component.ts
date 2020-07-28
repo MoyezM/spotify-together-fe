@@ -86,10 +86,15 @@ export class HomeComponent implements OnInit {
   }
 
   getSongInfo(songs) {
-    this.spotifyService.spotifyApi.getTracks(songs).then(data => {
-      this.songs = data.tracks;
-      this.ref.detectChanges();
-    });
+    this.songs = [];
+    while (songs.length) {
+      const songBatch = songs.splice(0, 50);
+      this.spotifyService.spotifyApi.getTracks(songBatch).then(data => {
+        this.songs.push(...data.tracks);
+      });
+    }
+
+    this.ref.detectChanges();
   }
 
   updateData(data: any) {
