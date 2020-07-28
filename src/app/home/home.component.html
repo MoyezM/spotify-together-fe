@@ -1,19 +1,24 @@
 <mat-toolbar class="toolbar" color="accent">
-  <span>
-    Room :
-    <mat-form-field>
-      <input matInput #box (keyup.enter)="set_room(box.value)">
-    </mat-form-field>
-  </span>
-  <span>
-    Current Room : {{this.room}}
-  </span>
-  <span>
-    <button mat-raised-button>
-      <a [href]="LOGIN_URL">Login</a>
-    </button>
-  </span>
+  <mat-toolbar-row class="toolbar">
+    <span>
+      Room :
+      <mat-form-field>
+        <input matInput #box (keyup.enter)="set_room(box.value)">
+      </mat-form-field>
+    </span>
+    <span>
+      <button mat-raised-button>
+        <a [href]="LOGIN_URL">Login</a>
+      </button>
+    </span>
+  </mat-toolbar-row>
+  <mat-toolbar-row>
+    <span>
+      Current Room : {{this.room}}
+    </span>
+  </mat-toolbar-row>
 </mat-toolbar>
+
 
 <div *ngIf='this.loaded' class="box">
   <div class="player">
@@ -46,7 +51,7 @@
   </div>
 
   <div *ngIf="this.loaded" class="queue">
-    <app-queue [songs]='this.songs'></app-queue>
+    <app-queue class="app_queue" [songs]='this.songs'></app-queue>
   </div>
 </div>
 

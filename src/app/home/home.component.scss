@@ -9,9 +9,24 @@
   }
 }
 
+.example-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #eee;
+}
+
+
 .box {
   margin-top: 25px;
   display: flex;
+  // flex-direction: column;
+
+  @media only screen and (max-width: 415px) {
+    flex-direction: column;
+  }
 
   .names {
     margin-top: 10px;
@@ -20,19 +35,21 @@
   }
 
   .progress {
-    margin-left : 50px;
-    margin-right : 50px;
+    margin-left : 1em;
+    margin-right : 1em;
     margin-top: 10px;
   }
 
   .player {
     width: 50%;
+    margin: 0 auto;
+
     .album {
       display: flex;
       justify-content: center;
 
       img {
-        width: 30%;
+        width:30em;
       }
     }
   }
@@ -47,9 +64,13 @@
 
   .queue {
     width: 50%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 
-    img {
-      width: 80%;
+    .app_queue {
+      min-width: 100%;
     }
   }
 
