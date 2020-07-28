@@ -87,18 +87,28 @@ export class HomeComponent implements OnInit {
 
   getSongInfo(songs) {
     this.songs = [];
+
+    const batches = Math.ceil(songs.length / 50);
+    const tempSongs = {};
+    let i = 0;
+
     while (songs.length) {
       const songBatch = songs.splice(0, 50);
       this.spotifyService.spotifyApi.getTracks(songBatch).then(data => {
-        this.songs.push(...data.tracks);
+        tempSongs[i] = data.tracks;
+        i++;
+
+        if (i === batches) {
+          for (const idx of Array(i).keys()) {
+            this.songs.push(...tempSongs[idx]);
+          }
+        }
       });
     }
-
     this.ref.detectChanges();
   }
 
   updateData(data: any) {
-    console.log(data);
     if (this.imageURL !== data.track_window.current_track.album.images[2].url) {
       this.imageURL = data.track_window.current_track.album.images[2].url;
       this.ref.detectChanges();
@@ -113,7 +123,6 @@ export class HomeComponent implements OnInit {
       this.ref.detectChanges();
     }
     if (this.playBackDuration !== data.duration) {
-      console.log('duration changed')
       this.playBackDuration = data.duration;
       this.song = data.track_window.current_track.name;
       this.ref.detectChanges();
