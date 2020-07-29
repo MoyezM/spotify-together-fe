@@ -12,7 +12,8 @@ export class QueueComponent implements OnInit {
   @Input() songs: Array<any>;
 
 
-  constructor(private socket: WebSocketService) { }
+  constructor(private socket: WebSocketService,
+              private spotifyService: SpotifyService) { }
 
   ngOnInit(): void {
   }
@@ -21,22 +22,39 @@ export class QueueComponent implements OnInit {
     this.socket.onAddNext(uri);
   }
 
+  extract_song_uri(text: string) {
+    const goodURIS = [];
+
+    if (text.includes("https://open.spotify.com/playlist/")) {
+      const uri = text.split("https://open.spotify.com/playlist/")[1].substring(0, 22);
+      this.spotifyService.spotifyApi.getPlaylistTracks(uri).then((data) => {
+        for (const d of data.items) {
+          goodURIS.push(d.track.id);
+        }
+
+        this.socket.onAddNext(goodURIS);
+      });
+    } else {
+      let uris = text.split("https://open.spotify.com/track/")
+      uris = uris.slice(1);
+      for (let uri of uris) {
+        uri = uri.substring(0, 22);
+        goodURIS.push(uri);
+      }
+      this.socket.onAddNext(goodURIS);
+    }
+  }
+
+  enter_link(text) {
+    this.extract_song_uri(text);
+
+  }
+
   onDrop(event: any) {
     event.preventDefault();
     event.stopPropagation();
-
-    const data = event.dataTransfer.getData("text");
-
-    let uris = data.split("https://open.spotify.com/track/")
-    uris = uris.slice(1);
-    const goodURIS = [];
-
-    for (let uri of uris) {
-      uri = uri.substring(0, 22);
-      goodURIS.push(uri);
-    }
-
-    this.socket.onAddNext(goodURIS);
+    const text = event.dataTransfer.getData("text");
+    this.extract_song_uri(text);
 
   }
 
