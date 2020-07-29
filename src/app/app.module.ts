@@ -13,6 +13,8 @@ import {MatCardModule} from '@angular/material/card';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 import { QueueComponent } from './queue/queue.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -30,7 +32,8 @@ import { QueueComponent } from './queue/queue.component';
     MatInputModule,
     MatCardModule,
     MatProgressBarModule,
-    MatSidenavModule
+    MatSidenavModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]

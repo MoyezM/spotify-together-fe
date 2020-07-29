@@ -1,4 +1,5 @@
 .drop {
+
   height: 6vw;
   width: 80%;
   background-color: rgb(65, 65, 65);
@@ -8,6 +9,11 @@
   align-items: center;
   margin: 0 auto;
   font-size: 1.5vw;
+
+  @media only screen and (max-width: 415px) {
+    height: 12vw;
+    font-size: 3vw;
+  }
 
   mat-form-field {
     border-radius: 25px;
