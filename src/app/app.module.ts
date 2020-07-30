@@ -15,6 +15,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { QueueComponent } from './queue/queue.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { environment } from '../environments/environment';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     MatButtonModule,
     MatIconModule,

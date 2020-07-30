@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
   loaded = false;
   songs = [];
   endtime: number;
+  index: number;
 
   currentSong = {
     song: '',
@@ -56,7 +57,10 @@ export class HomeComponent implements OnInit {
     });
 
     this.socket.onNext$().subscribe((data) => {
-      this.spotifyService.playTrack(data);
+      const song = data['song'];
+      this.index = data['index'];
+
+      this.spotifyService.playTrack(song);
     });
 
     this.socket.onAddNext$().subscribe((data) => {
@@ -145,6 +149,7 @@ export class HomeComponent implements OnInit {
     if (!this.loaded) {
       this.loaded = true;
       this.socket.connect();
+      console.log("Connecting to socket")
       setTimeout(() => {
         this.socket_subscriptions();
         this.room = this.socket.get_room();

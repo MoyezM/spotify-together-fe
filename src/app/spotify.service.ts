@@ -1,6 +1,8 @@
+import { environment } from 'src/environments/environment';
 import { Subject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import SpotifyWebApi from 'spotify-web-api-js';
+import { HttpClient } from '@angular/common/http';
 
 declare global {
   interface Window {
@@ -19,11 +21,12 @@ export class SpotifyService {
   player;
   deviceId;
   private token: string;
+  private refresh_token: string;
   private stateSubject = new Subject<any>();
   getState$: Observable<any>;
   spotifyApi = new SpotifyWebApi();
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.getState$ = this.stateSubject.asObservable();
   }
 
@@ -46,6 +49,16 @@ export class SpotifyService {
         this.player = new window.Spotify.Player({
           name: 'Spotify Together',
           getOAuthToken: callback => {
+            const options = {
+              params : {
+                refresh_token : this.refresh_token
+              }
+            };
+            this.http.get<any>(environment.API_URL + '/refresh_token', options).subscribe(data => {
+              this.token = data.access_token;
+              this.spotifyApi.setAccessToken(this.token);
+              console.log("refreshing token");
+            });
             callback(this.token);
           },
           volume: 1.0
@@ -71,9 +84,10 @@ export class SpotifyService {
   setToken() {
     return new Promise((resolve, reject) => {
       const params = this.getHashParams();
+      this.refresh_token = params.refresh_token;
       this.token = params.access_token;
       if (this.token) {
-        this.spotifyApi.setAccessToken(this.token)
+        this.spotifyApi.setAccessToken(this.token);
       }
       resolve(this.token);
     });

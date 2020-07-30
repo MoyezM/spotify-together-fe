@@ -10,6 +10,8 @@ import { SpotifyService } from '../spotify.service';
 })
 export class QueueComponent implements OnInit {
   @Input() songs: Array<any>;
+  @Input() index: number;
+
 
 
   constructor(private socket: WebSocketService,
@@ -66,5 +68,12 @@ export class QueueComponent implements OnInit {
   onDragLeave(evt) {
       evt.preventDefault();
       evt.stopPropagation();
+  }
+
+  scroll(id) {
+    console.log(this.index)
+    const el = document.getElementById(id);
+    el.scrollIntoView();
+
   }
 }

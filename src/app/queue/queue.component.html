@@ -6,14 +6,25 @@
     <mat-label>Paste or Drop Spotify Link</mat-label>
     <input matInput #box (keyup.enter)="enter_link(box.value)">
   </mat-form-field>
-
 </div>
+<div class="scroll-button">
+  <button  mat-raised-button (click)="scroll('target')">Scroll</button>
+</div>
+
 <div class="songs">
-  <div *ngFor="let song of this.songs">
-    <div>
+  <div *ngFor="let song of this.songs; index as i">
+    <div *ngIf="i === this.index">
+      <div id="target">
+        <mat-card class="song">
+          {{song.name}}
+        </mat-card>
+      </div>
+    </div>
+    <div *ngIf="i !== this.index">
       <mat-card class="song">
         {{song.name}}
       </mat-card>
     </div>
   </div>
 </div>
+
